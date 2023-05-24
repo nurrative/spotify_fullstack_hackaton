@@ -6,3 +6,4 @@ Pillow
 drf-yasg
 python-decouple
 django-filter
+django-cors-headers
