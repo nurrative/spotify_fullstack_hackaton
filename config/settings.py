@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG") #if config('DEBUG') == '1' else False
+DEBUG = config("DEBUG") if config('DEBUG') == '1' else False
 
 ALLOWED_HOSTS = config('ALLOWED_HOST', default= '*').split()
 
@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_yasg',
     'corsheaders',
+    'rest_framework_simplejwt.token_blacklist',
 
 
     #our libs
