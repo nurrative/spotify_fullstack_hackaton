@@ -1,6 +1,7 @@
 from rest_framework import serializers
+from django.utils.crypto import get_random_string
 from .models import UserImage, User
-from .utils import send_activation_code
+from .utils import send_activation_code, reset_password
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
@@ -83,5 +84,28 @@ class ChangePasswordSerializer(serializers.Serializer):
         user = User.objects.get(email=data['email'])
         user.set_activation_code()
         user.password_confirm()
+
+class PasswordResetSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        # Проверяем, существует ли пользователь с указанным email
+        if not User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("Пользователь с указанным email не существует.")
+        return value
+
+    def save(self):
+        email = self.validated_data['email']
+        user = User.objects.get(email=email)
+
+        # Генерируем новый пароль
+        new_password = get_random_string(length=8)
+
+        # Устанавливаем новый пароль для пользователя
+        user.set_password(new_password)
+        user.save()
+
+        # Отправляем email с новым паролем
+        reset_password(email, new_password)
 
 
