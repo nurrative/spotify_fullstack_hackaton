@@ -97,15 +97,16 @@ class PasswordResetSerializer(serializers.Serializer):
     def save(self):
         email = self.validated_data['email']
         user = User.objects.get(email=email)
-
         # Генерируем новый пароль
         new_password = get_random_string(length=8)
-
         # Устанавливаем новый пароль для пользователя
         user.set_password(new_password)
         user.save()
-
         # Отправляем email с новым паролем
         reset_password(email, new_password)
+
+class LogoutSerializer(serializers.Serializer):
+    refresh_token = serializers.CharField()
+
 
 

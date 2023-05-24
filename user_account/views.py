@@ -6,6 +6,9 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from .serializers import *
 from rest_framework.generics import CreateAPIView
+from rest_framework_simplejwt.tokens import RefreshToken
+
+
 User = get_user_model()
 
 
@@ -29,6 +32,9 @@ class ActivationView(APIView):
 
 
 class ChangePasswordAPIView(APIView):
+    '''
+    Only authorized users can change the password
+    '''
     permission_classes = (IsAuthenticated,)
     @swagger_auto_schema(request_body=ChangePasswordSerializer)
     def post(self, request, *args, **kwargs):
@@ -53,3 +59,21 @@ class ChangePasswordAPIView(APIView):
 
 class PasswordResetView(CreateAPIView):
     serializer_class = PasswordResetSerializer
+
+
+class LogoutAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = [LogoutSerializer,]
+    '''
+    Only authorized users can make a logout
+    '''
+    @swagger_auto_schema(request_body=LogoutSerializer)
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response(status=204)
+        except Exception as e:
+            return Response(status=400)
