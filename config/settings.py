@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     #our libs
     'user_account',
+    'songs',
 ]
 
 MIDDLEWARE = [
@@ -153,6 +154,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
 
 CORS_ALLOW_ORIGINS = [
     'http://localhost:3000',
@@ -182,3 +185,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 ACTIVATE_USERS_EMAIL = True
 EMAIL_USE_SSL = False
+
+ACCOUNT_LOGOUT_ON_GET = True
