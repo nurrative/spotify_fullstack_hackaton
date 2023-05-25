@@ -5,7 +5,7 @@ from rest_framework import viewsets
 from rest_framework.parsers import MultiPartParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import SongSerializer, ArtistSerializer
+from .serializers import SongSerializer, ArtistSerializer, GenreSerializer
 from .models import Song, Artist
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from drf_yasg.utils import swagger_auto_schema
@@ -32,3 +32,4 @@ class SongRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 class ArtistViewSet(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
+
