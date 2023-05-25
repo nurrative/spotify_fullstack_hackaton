@@ -19,7 +19,7 @@ class ArtistSerializer(serializers.ModelSerializer):
         # exclude = ('user',)
         fields = '__all__'
 
-    def to_representation(self, instance: Artist):
-        rep = super().to_representation(instance)
-        rep['song'] = SongSerializer(instance.song).data
-        return  rep
+    # def to_representation(self, instance: Artist):
+    #     rep = super().to_representation(instance)
+    #     rep['song'] = SongSerializer(instance.song).data
+    #     return  rep
