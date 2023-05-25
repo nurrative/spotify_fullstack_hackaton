@@ -9,6 +9,7 @@ class AlbumSerializer(serializers.ModelSerializer):
 
 class ArtistSerializer(serializers.ModelSerializer):
     albums = AlbumSerializer(many=True, read_only=True)
+
     songs = serializers.SerializerMethodField()
 
     class Meta:
@@ -44,6 +45,7 @@ class SongSerializer(serializers.ModelSerializer):
     
     def get_cover_photo(self,obj):
         return obj.album.cover_photo
+
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
