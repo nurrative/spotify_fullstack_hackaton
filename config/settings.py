@@ -36,7 +36,7 @@ INSTALLED_APPS = [
 
     #our libs
     'user_account',
-    'main',
+    # 'main',
     # 'files',
 ]
 
@@ -152,6 +152,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
