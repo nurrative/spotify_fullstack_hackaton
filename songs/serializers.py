@@ -32,7 +32,6 @@ class SongSerializer(serializers.ModelSerializer):
     release_date = serializers.SerializerMethodField()
     cover_photo = serializers.SerializerMethodField()
 
-
     class Meta:
         model = Song
         fields = ('title', 'audio_file', 'album', 'artist', 'release_date', 'genre')

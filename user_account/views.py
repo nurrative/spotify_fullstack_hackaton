@@ -9,9 +9,6 @@ from rest_framework.generics import CreateAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
-User = get_user_model()
-
-
 class RegisterUserView(APIView):
     @swagger_auto_schema(request_body=RegisterUserSerializer())
     def post(self, request):
@@ -19,6 +16,9 @@ class RegisterUserView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response("Вы успешно зарегестрировались!", status=201)
+    
+
+User = get_user_model()
 
 
 class ActivationView(APIView):
@@ -42,15 +42,12 @@ class ChangePasswordAPIView(APIView):
         new_password = request.data.get("new_password")
         confirm_password = request.data.get("confirm_password")
 
-        # Check if the current password is correct
         if not request.user.check_password(current_password):
             return Response({"message": "Current password is incorrect"}, status=400)
 
-        # Check if the new password and confirm password match
         if new_password != confirm_password:
             return Response({"message": "New password and confirm password do not match"}, status=400)
 
-        # Change the password and save the user
         request.user.set_password(new_password)
         request.user.save()
 
@@ -62,11 +59,11 @@ class PasswordResetView(CreateAPIView):
 
 
 class LogoutAPIView(APIView):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = [LogoutSerializer,]
     '''
     Only authorized users can make a logout
     '''
+    permission_classes = (IsAuthenticated,)
+    serializer_class = [LogoutSerializer,]
     @swagger_auto_schema(request_body=LogoutSerializer)
     def post(self, request):
         try:
