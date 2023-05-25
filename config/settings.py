@@ -38,7 +38,7 @@ INSTALLED_APPS = [
 
     #our libs
     'user_account',
-    'songs',
+    'main',
 ]
 
 MIDDLEWARE = [
