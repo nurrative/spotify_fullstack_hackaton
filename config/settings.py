@@ -35,12 +35,19 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_yasg',
     'corsheaders',
+
+    'review',
+
     'rest_framework_simplejwt.token_blacklist',
+
 
 
     #our libs
     'user_account',
+    
+
     'songs',
+
 ]
 
 MIDDLEWARE = [
