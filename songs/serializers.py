@@ -10,6 +10,7 @@ class AlbumSerializer(serializers.ModelSerializer):
 class ArtistSerializer(serializers.ModelSerializer):
     albums = AlbumSerializer(many=True, read_only=True)
     songs = serializers.SerializerMethodField()
+    print(songs)
 
     class Meta:
         model = Artist
@@ -18,7 +19,9 @@ class ArtistSerializer(serializers.ModelSerializer):
     def get_songs(self, instance: Artist):
         albums = instance.albums.all()
         songs = Song.objects.filter(album__in=albums)
+        print("1", songs)
         song_serializer = SongSerializer(songs, many=True)
+        print('',song_serializer.data)
         return song_serializer.data
 
     def to_representation(self, instance):
@@ -35,7 +38,7 @@ class SongSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Song
-        fields = ('id', 'title', 'audio_file', 'album', 'artist', 'release_date', 'cover_photo')
+        fields = ('id', 'title', 'audio_file', 'album','artist', 'release_date', 'cover_photo')
 
     def get_artist(self, obj):
         return obj.album.artist.full_name
