@@ -40,10 +40,6 @@ class ArtistDetailView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
 
 
-class ArtistDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = Artist.objects.all()
-    serializer_class = ArtistSerializer
-    lookup_field = 'id'
 
 class AlbumViewSet(viewsets.ModelViewSet):
     queryset = Album.objects.all()

@@ -5,19 +5,19 @@ from .models import Song, Artist, Album #Genre
 class AlbumSerializer(serializers.ModelSerializer):
     class Meta:
         model = Album
-        fields = ('title','artist', 'genre', 'release', 'description', 'cover_photo')
+        fields = ('title','artist', 'release', 'description', 'cover_photo')
 
 class ArtistSerializer(serializers.ModelSerializer):
     albums = AlbumSerializer(many=True, read_only=True)
-
     songs = serializers.SerializerMethodField()
 
     class Meta:
         model = Artist
         fields = ('full_name', 'bio', 'albums', 'songs', 'photo')
 
-    def get_songs(self, instance : Artist):
-        songs = Song.objects.filter(album=instance)
+    def get_songs(self, instance: Artist):
+        albums = instance.albums.all()
+        songs = Song.objects.filter(album__in=albums)
         song_serializer = SongSerializer(songs, many=True)
         return song_serializer.data
 
@@ -35,7 +35,7 @@ class SongSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Song
-        fields = ('title', 'audio_file', 'album', 'artist', 'release_date', 'genre', 'cover_photo')
+        fields = ('title', 'audio_file', 'album', 'artist', 'release_date', 'cover_photo')
 
     def get_artist(self, obj):
         return obj.album.artist.full_name

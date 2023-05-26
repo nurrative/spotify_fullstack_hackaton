@@ -10,11 +10,6 @@ class Artist(models.Model):
         return self.full_name
     
 
-# class Genre(models.Model):
-#     slug = models.SlugField(max_length=50, primary_key=True, unique=True)
-#     name = models.CharField(max_length=50, unique=True)
-#     # album = models.ManyToManyField('songs.Album', related_name='genres')
-    
 class Album(models.Model):
     title = models.CharField(max_length=100)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE, related_name='albums')
@@ -36,5 +31,8 @@ class Song(models.Model):
     def __str__(self):
         return self.title
 
-
+# class Genre(models.Model):
+#     slug = models.SlugField(max_length=50, primary_key=True, unique=True)
+#     name = models.CharField(max_length=50, unique=True)
+#     # album = models.ManyToManyField('songs.Album', related_name='genres')
 
