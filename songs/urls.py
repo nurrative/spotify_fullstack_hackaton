@@ -5,12 +5,11 @@ from .views import *
 
 router = DefaultRouter()
 router.register('albums', AlbumViewSet)
+router.register('artists', ArtistViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
     path('songs/', SongListView.as_view()),
     path('songs/upload/', SongUploadView.as_view()),
     path('songs/<int:pk>/', SongRetrieveUpdateDestroyView.as_view()),
-    path('artists/', ArtistListCreateAPIView.as_view()),
-    path('artist/<int:pk>/', ArtistDetailView.as_view())
 ]
