@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from django.shortcuts import render, get_object_or_404
 from .models import Song, Comment
@@ -15,4 +16,5 @@ def add_comment(request, post_id):
         comment = Comment.objects.create(post=post, user=user, content=content)
         # Дополнительные действия, если необходимо
     return redirect('post_detail', post_id=post_id)
+
 

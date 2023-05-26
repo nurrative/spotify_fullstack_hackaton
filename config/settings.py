@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from decouple import config
 
@@ -12,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG") #if config('DEBUG') == '1' else False
+DEBUG = config("DEBUG") if config('DEBUG') == '1' else False
 
 ALLOWED_HOSTS = config('ALLOWED_HOST', default= '*').split()
 
@@ -26,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.core.files.images',
 
 
     #libs
@@ -33,12 +35,19 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_yasg',
     'corsheaders',
+
     'review',
+
+    'rest_framework_simplejwt.token_blacklist',
+
 
 
     #our libs
     'user_account',
     
+
+    'songs',
+
 ]
 
 MIDDLEWARE = [
@@ -148,18 +157,26 @@ USE_I18N = True
 
 USE_TZ = True
 
+DEFAULT_CHARSET = 'utf-8'
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
+# DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 CORS_ALLOW_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
     'http://localhost:3001',
     'http://127.0.0.1:3001',
+    'http://127.0.0.1:8000',
 ]
 
 CORS_ORIGIN_WHITELIST = [
@@ -167,6 +184,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:3000',
     'http://localhost:3001',
     'http://127.0.0.1:3001',
+    'http://127.0.0.1:8000',
 ]
 
 # Default primary key field type
@@ -183,3 +201,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 ACTIVATE_USERS_EMAIL = True
 EMAIL_USE_SSL = False
+
+ACCOUNT_LOGOUT_ON_GET = True
+

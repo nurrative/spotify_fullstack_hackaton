@@ -30,3 +30,11 @@ def send_activation_code(email: str,activation_code: str):
         recipient_list=[email], #recipient_list - куда или кому отпарвивть. на данную почту отправляем активационный код
         html_message=html
     )
+
+def reset_password(email, new_password):
+    send_mail(
+            subject='Сброс пароля',
+            message=f'Ваш новый пароль: {new_password}',
+            from_email=None,
+            recipient_list=[email],
+        )

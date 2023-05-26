@@ -1,12 +1,6 @@
 from django.db import models
-# from django.contrib.auth.models import User
-from config import settings
 
-class Song(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+from config import settings
 
 class Comment(models.Model):
     post = models.ForeignKey(Song, on_delete=models.CASCADE)
@@ -22,3 +16,4 @@ class Like(models.Model):
     description = models.TextField()
     quantity = models.IntegerField()
     created_at = models.DateField(auto_now_add=True)
+
