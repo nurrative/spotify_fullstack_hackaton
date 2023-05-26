@@ -12,5 +12,5 @@ urlpatterns = [
     path('songs/upload/', SongUploadView.as_view()),
     path('songs/<int:pk>/', SongRetrieveUpdateDestroyView.as_view()),
     path('artists/', ArtistListCreateAPIView.as_view()),
-    path('artist/<int:pk>/', ArtistDetailView.as_view())
+    path('songs/artist/<int:id>/', ArtistDetailView.as_view())
 ]

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Song, Artist, Genre, Album
+from .models import Song, Artist, Album #Genre
 
 
 class AlbumSerializer(serializers.ModelSerializer):
@@ -14,10 +14,10 @@ class ArtistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Artist
-        fields = ('full_name', 'bio', 'albums', 'songs')
+        fields = ('full_name', 'bio', 'albums', 'songs', 'photo')
 
-    def get_songs(self, instance):
-        songs = Song.objects.filter(album__artist=instance)
+    def get_songs(self, instance : Artist):
+        songs = Song.objects.filter(album=instance)
         song_serializer = SongSerializer(songs, many=True)
         return song_serializer.data
 
@@ -38,7 +38,7 @@ class SongSerializer(serializers.ModelSerializer):
         fields = ('title', 'audio_file', 'album', 'artist', 'release_date', 'genre', 'cover_photo')
 
     def get_artist(self, obj):
-        return obj.album.artist_id.full_name
+        return obj.album.artist.full_name
 
     def get_release_date(self, obj):
         return obj.album.release
@@ -55,9 +55,9 @@ class SongSerializer(serializers.ModelSerializer):
         return representation
     
 
-class GenreSerializer(serializers.ModelSerializer):
-    songs = SongSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Genre
-        fields = ('slug', 'name', 'songs')
+# class GenreSerializer(serializers.ModelSerializer):
+#     songs = SongSerializer(many=True, read_only=True)
+#
+#     class Meta:
+#         model = Genre
+#         fields = ('slug', 'name', 'songs')
