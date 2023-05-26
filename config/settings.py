@@ -33,10 +33,12 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_yasg',
     'corsheaders',
+    'review',
 
 
     #our libs
     'user_account',
+    
 ]
 
 MIDDLEWARE = [

@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+from review import views
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -32,4 +33,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('docs/', schema_view.with_ui("swagger")),
     path('api/v1/account/', include('user_account.urls')),
+    path('song/<int:song_id>/', views.song_detail, name='song_detail'),
+
 ]
