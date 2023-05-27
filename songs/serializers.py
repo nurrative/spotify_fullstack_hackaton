@@ -20,15 +20,17 @@ class ArtistSerializer(serializers.ModelSerializer):
         albums = instance.albums.all()
         songs = Song.objects.filter(album__in=albums)
         song_serializer = SongSerializer(songs, many=True)
-        print(song_serializer.data)
+        # print(song_serializer.data)
         data = song_serializer.data
         data = [{**song, 'audio_file': f"{config('LINK')}{song['audio_file']}"} for song in data]
-        print(data)
+        # print(data)
         return data
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['albums'] = AlbumSerializer(instance.albums.all(), many=True).data
+        print(representation['albums'])
+        # representation['albums'] = [**rep]
         representation['songs'] = self.get_songs(instance)
         return representation
 
@@ -43,7 +45,7 @@ class SongSerializer(serializers.ModelSerializer):
         fields = ('id','title', 'audio_file', 'album', 'artist', 'release_date', 'cover_photo') #cover_song
 
     def get_artist(self, obj):
-        return obj.album.artist.full_name
+        return obj.album.artist.id, obj.album.artist.full_name
 
     def get_release_date(self, obj):
         return obj.album.release
