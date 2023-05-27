@@ -9,3 +9,6 @@ class Playlist(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='playlists')
     songs_id = models.ManyToManyField(Song, related_name='playlists')
     description = models.TextField()
+
+    def __str__(self):
+        return self.title
