@@ -1,7 +1,13 @@
 from rest_framework import serializers
-from .models import Song, Artist, Album  # Genre
+from .models import *
 from django.utils.encoding import force_str
 from decouple import config
+
+
+class GenreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Genre
+        fields = '__all__'
 
 class AlbumSerializer(serializers.ModelSerializer):
     class Meta:
@@ -63,4 +69,5 @@ class SongSerializer(serializers.ModelSerializer):
         representation['artist'] = self.get_artist(instance)
         representation['release_date'] = self.get_release_date(instance)
         representation['cover_photo'] = self.get_cover_photo(instance)
+        representation['genre'] = GenreSerializer(instance.genre).data
         return representation
