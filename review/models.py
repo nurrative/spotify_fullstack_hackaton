@@ -1,19 +1,25 @@
 from django.db import models
-
-from config import settings
-
-class Comment(models.Model):
-    # post = models.ForeignKey(Song, on_delete=models.CASCADE)
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+from user_account.models import User
+from songs.models import *
 
 
-class Like(models.Model):
-    title = models.CharField(max_length=50)
-    content = models.TextField()
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    description = models.TextField()
-    quantity = models.IntegerField()
-    created_at = models.DateField(auto_now_add=True)
+
+# class Comment(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='comments')
+#     song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name='comments')
+#     body = models.TextField()
+#     created_ad = models.DateTimeField(auto_now_add=True)
+#     updated_ad = models.DateTimeField(auto_now=True)
+
+
+class Rating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ratings')
+    song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name='ratings')
+    value = models.IntegerField(choices=[(1,1),(2,2), (3,3), (4,4), (5,5)])
+    #choices позволяет сократить выбор, можно выбрать только те значения, которые внутри choices
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites')
+    song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name='favorites')
+    # album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='favorites')
 

@@ -1,20 +1,34 @@
+from django.shortcuts import render
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from drf_yasg.utils import swagger_auto_schema
+from .permissions import IsAuthor
+from .models import Rating, Favorite
+from .serializers import RatingSerializer, FavoriteSerializer
+# Create your views here.
 
-# from django.shortcuts import render, redirect
-# from django.shortcuts import render, get_object_or_404
-# # from .models import Song, Comment
-#
-# def song_detail(request, post_id):
-#     post = get_object_or_404(Song, pk=post_id)
-#     comments = Comment.objects.filter(post=post)
-#     return render(request, 'post_detail.html', {'post': post, 'comments': comments})
-#
-# def add_comment(request, post_id):
-#     post = get_object_or_404(Song, pk=post_id)
-#     if request.method == 'POST':
-#         content = request.Song['content']
-#         user = request.user
-#         comment = Comment.objects.create(post=post, user=user, content=content)
-#         # Дополнительные действия, если необходимо
-#     return redirect('post_detail', post_id=post_id)
+class FavoriteViewSet(
+    mixins.CreateModelMixin, mixins.ListModelMixin, mixins.DestroyModelMixin,mixins.RetrieveModelMixin, GenericViewSet):
+    queryset =  Favorite.objects.all()
+    serializer_class = FavoriteSerializer
+    permission_classes = [IsAuthenticated, IsAuthor]
 
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
+        #пытаемся установить фильтр по Избранным
+
+
+
+class AddRatingAPIView(APIView):
+    permission_classes = [IsAuthenticated, IsAuthor]
+
+    @swagger_auto_schema(request_body=RatingSerializer())
+    def post(self, request):
+        ser = RatingSerializer(data=request.data, context={'request': request})
+        ser.is_valid(raise_exception=True)
+        ser.save()
+        return Response(ser.data, status=201)
 
