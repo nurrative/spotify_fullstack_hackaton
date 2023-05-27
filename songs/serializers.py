@@ -1,13 +1,12 @@
 from rest_framework import serializers
 from .models import Song, Artist, Album  # Genre
 from django.utils.encoding import force_str
-
+from decouple import config
 
 class AlbumSerializer(serializers.ModelSerializer):
     class Meta:
         model = Album
-        fields = ('id','title', 'artist', 'release', 'description', 'cover_photo')
-
+        fields = ('id','title','artist', 'release', 'description', 'cover_photo')
 
 class ArtistSerializer(serializers.ModelSerializer):
     albums = AlbumSerializer(many=True, read_only=True)
@@ -21,7 +20,11 @@ class ArtistSerializer(serializers.ModelSerializer):
         albums = instance.albums.all()
         songs = Song.objects.filter(album__in=albums)
         song_serializer = SongSerializer(songs, many=True)
-        return song_serializer.data
+        print(song_serializer.data)
+        data = song_serializer.data
+        data = [{**song, 'audio_file': f"{config('LINK')}{song['audio_file']}"} for song in data]
+        print(data)
+        return data
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -46,16 +49,8 @@ class SongSerializer(serializers.ModelSerializer):
         return obj.album.release
 
 
-
-    # def get_cover_photo(self, obj):
-    #     request = self.context.get('request')
-    #     if obj.album.cover_photo:
-    #         return request.build_absolute_uri(obj.album.cover_photo.url)
-    #     return None
-
     def get_cover_photo(self, obj):
-        # return force_str(obj.album.cover_photo)
-        return f'http://127.0.0.1:8000/{force_str(obj.album.cover_photo)}'
+        return f'{config("LINK")}/media/{force_str(obj.album.cover_photo)}'
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
