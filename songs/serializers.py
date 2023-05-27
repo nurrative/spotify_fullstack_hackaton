@@ -8,6 +8,7 @@ class AlbumSerializer(serializers.ModelSerializer):
         model = Album
         fields = ('id','title','artist', 'release', 'description', 'cover_photo')
 
+
 class ArtistSerializer(serializers.ModelSerializer):
     albums = AlbumSerializer(many=True, read_only=True)
     songs = serializers.SerializerMethodField()
