@@ -4,6 +4,8 @@ from drf_yasg.utils import swagger_auto_schema
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
+
 from .serializers import *
 from rest_framework.generics import CreateAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -74,3 +76,7 @@ class LogoutAPIView(APIView):
             return Response(status=204)
         except Exception as e:
             return Response(status=400)
+
+class ProfileViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = ProfileSerializer

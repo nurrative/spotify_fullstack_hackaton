@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.utils.crypto import get_random_string
 from .models import UserImage, User
 from .utils import send_activation_code, reset_password
+from review.serializers import *
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
@@ -108,5 +109,21 @@ class PasswordResetSerializer(serializers.Serializer):
 class LogoutSerializer(serializers.Serializer):
     refresh_token = serializers.CharField()
 
+class ProfileSerializer(serializers.ModelSerializer):
+    favorites = FavoriteSerializer(many=True, read_only=True)
+    ratings = RatingSerializer(many=True, read_only=True)
+    class Meta:
+        model = User
+        fields = ('email', 'phone', 'favorites', 'ratings')
 
+    # def get_artist(self, obj):
+    #     return obj.album.artist.full_name
+    #
+    # def to_representation(self, instance: User):
+    #     #self - это обекты от ProfileSerializer
+    #     #instance - это обекты от User. Его получим после того как нам передадут аргумент
+    #     rep = super().to_representation(instance)
+    #     #собирает словарь из fields = ('email', 'phone', 'bio')
+    #     rep['favourite'] = instance.favourites.song
+    #     return rep
 
