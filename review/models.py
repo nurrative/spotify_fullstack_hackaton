@@ -3,12 +3,14 @@ from user_account.models import User
 from songs.models import *
 
 
+
 # class Comment(models.Model):
 #     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='comments')
 #     song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name='comments')
 #     body = models.TextField()
 #     created_ad = models.DateTimeField(auto_now_add=True)
 #     updated_ad = models.DateTimeField(auto_now=True)
+
 
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ratings')
@@ -20,3 +22,4 @@ class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites')
     song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name='favorites')
     # album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='favorites')
+
