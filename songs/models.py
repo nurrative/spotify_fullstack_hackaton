@@ -30,7 +30,7 @@ class Song(models.Model):
     title = models.CharField(max_length=100)
     audio_file = models.FileField(upload_to='songs')
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='songs')
-    genre = models.ForeignKey(Genre,on_delete=models.CASCADE, related_name='genres')
+    genre = models.ForeignKey(Genre,on_delete=models.CASCADE, related_name='songs')
 
     def __str__(self):
         return self.title
