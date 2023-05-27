@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import mixins
+from rest_framework import mixins, viewsets
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -10,12 +10,14 @@ from .models import Rating, Favorite
 from .serializers import RatingSerializer, FavoriteSerializer
 # Create your views here.
 
-class FavoriteViewSet(
-    mixins.CreateModelMixin, mixins.ListModelMixin, mixins.DestroyModelMixin,mixins.RetrieveModelMixin, GenericViewSet):
-    queryset =  Favorite.objects.all()
+# class FavoriteViewSet(
+#     mixins.CreateModelMixin, mixins.ListModelMixin, mixins.DestroyModelMixin,mixins.RetrieveModelMixin, GenericViewSet):
+#     queryset =  Favorite.objects.all()
+#     serializer_class = FavoriteSerializer
+#     permission_classes = [IsAuthenticated, IsAuthor]
+class FavoriteViewSet(viewsets.ModelViewSet):
+    queryset = Favorite.objects.all()
     serializer_class = FavoriteSerializer
-    permission_classes = [IsAuthenticated, IsAuthor]
-
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
         #пытаемся установить фильтр по Избранным
