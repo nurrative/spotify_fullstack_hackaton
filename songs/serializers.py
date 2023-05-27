@@ -8,8 +8,13 @@ class AlbumSerializer(serializers.ModelSerializer):
         model = Album
         fields = ('id','title','artist', 'release', 'description', 'cover_photo')
 
+class SimpleAlbumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Album
+        fields = ('id', 'title', 'cover_photo')
+
 class ArtistSerializer(serializers.ModelSerializer):
-    albums = AlbumSerializer(many=True, read_only=True)
+    albums = SimpleAlbumSerializer(many=True, read_only=True)
     songs = serializers.SerializerMethodField()
 
     class Meta:
@@ -28,9 +33,8 @@ class ArtistSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['albums'] = AlbumSerializer(instance.albums.all(), many=True).data
-        print(representation['albums'])
-        # representation['albums'] = [**rep]
+        # representation['albums'] = AlbumSerializer(instance.albums.all(), many=True).data
+        # print(representation['albums'])
         representation['songs'] = self.get_songs(instance)
         return representation
 
