@@ -10,3 +10,11 @@ class Playlist(models.Model):
     # song = models.ManyToManyField(Song, related_name='playlists')
     song = models.ManyToManyField(Song, related_name='playlists')
     description = models.TextField()
+
+    @property
+    def average_rating(self):
+        ratings = self.ratings.all()  # так как ratings связан с продуктом через fk, то можем ссылаться на их related name
+        if ratings.exists():
+            return sum([x.value for x in ratings]) // ratings.count()
+            # ищем среднее значение рейтинга
+        return 0

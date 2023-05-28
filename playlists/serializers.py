@@ -41,6 +41,8 @@ class PlaylistSerializer(ModelSerializer):
             'id': instance.user.id,
             'email': instance.user.email,
         }
+        rep['likes'] = instance.likes.all().count()
+        rep['rating'] = instance.average_rating
         return rep
 
 
