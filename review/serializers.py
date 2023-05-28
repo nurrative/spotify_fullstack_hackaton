@@ -17,10 +17,10 @@ class RatingSerializer(ModelSerializer):
         return obj
 
     def to_representation(self, instance: Favorite):
-        from songs.serializers import SongSerializer
+        from playlists.serializers import PlaylistSerializer
 
         rep = super().to_representation(instance)
-        rep['song'] = SongSerializer(instance.song).data
+        rep['playlist'] = PlaylistSerializer(instance.song).data
         return  rep
 
 class FavoriteSerializer(ModelSerializer):

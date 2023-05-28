@@ -3,6 +3,7 @@ from django.utils.crypto import get_random_string
 from .models import UserImage, User
 from .utils import send_activation_code, reset_password
 from review.serializers import *
+from playlists.serializers import *
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
@@ -111,10 +112,12 @@ class LogoutSerializer(serializers.Serializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     favorites = FavoriteSerializer(many=True, read_only=True)
+    playlists = PlaylistSerializer(many=True, read_only=True)
     ratings = RatingSerializer(many=True, read_only=True)
+
     class Meta:
         model = User
-        fields = ('email', 'phone', 'favorites', 'ratings')
+        fields = ('email', 'phone', 'favorites', 'playlists', 'ratings')
 
     # def get_artist(self, obj):
     #     return obj.album.artist.full_name
