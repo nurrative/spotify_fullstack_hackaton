@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     #libs
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_filters',
     'drf_yasg',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
