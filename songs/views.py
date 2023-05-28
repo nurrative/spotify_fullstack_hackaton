@@ -4,8 +4,8 @@ from rest_framework import viewsets
 from rest_framework.parsers import MultiPartParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import SongSerializer, ArtistSerializer, AlbumSerializer
-from .models import Song, Artist, Album
+from .serializers import *
+from .models import *
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, ListCreateAPIView
 from drf_yasg.utils import swagger_auto_schema
 
@@ -40,14 +40,11 @@ class ArtistRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     serializer_class = ArtistSerializer
     lookup_field = 'id'
 
-#
-# class ArtistDetailView(RetrieveUpdateDestroyAPIView):
-#     queryset = Artist.objects.all()
-#     serializer_class = ArtistSerializer
-#     lookup_field = 'id'
-
-
 class AlbumViewSet(viewsets.ModelViewSet):
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
+
+class GenreListView(ListAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
 
