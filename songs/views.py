@@ -1,6 +1,6 @@
-from django.shortcuts import render
 from rest_framework import viewsets
-
+from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.parsers import MultiPartParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -28,21 +28,21 @@ class SongListView(ListAPIView):
 class SongRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Song.objects.all()
     serializer_class = SongSerializer
+    filter_backends = (SearchFilter, DjangoFilterBackend)
+    search_fields = ('title',)
 
 class ArtistViewSet(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
+    filter_backends = (SearchFilter, DjangoFilterBackend)
+    search_fields = ('full_name',)
 
-
-
-class ArtistRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = Artist.objects.all()
-    serializer_class = ArtistSerializer
-    lookup_field = 'id'
 
 class AlbumViewSet(viewsets.ModelViewSet):
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
+    filter_backends = (SearchFilter, DjangoFilterBackend)
+    search_fields = ('title',)
 
 class GenreListView(ListAPIView):
     queryset = Genre.objects.all()
