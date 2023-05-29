@@ -10,8 +10,8 @@ from rest_framework.generics import get_object_or_404
 
 from playlists.models import Playlist
 from .permissions import IsAuthor
-from .models import Rating, Favorite, Like
-from .serializers import RatingSerializer, FavoriteSerializer
+from .models import Rating, Like
+from .serializers import RatingSerializer
 # Create your views here.
 
 # class FavoriteViewSet(
@@ -19,13 +19,15 @@ from .serializers import RatingSerializer, FavoriteSerializer
 #     queryset =  Favorite.objects.all()
 #     serializer_class = FavoriteSerializer
 #     permission_classes = [IsAuthenticated, IsAuthor]
-class FavoriteViewSet(viewsets.ModelViewSet):
-    queryset = Favorite.objects.all()
-    serializer_class = FavoriteSerializer
-    lookup_field = 'id'
-    def get_queryset(self):
-        return self.queryset.filter(user=self.request.user)
-        #пытаемся установить фильтр по Избранным
+
+
+# class FavoriteViewSet(viewsets.ModelViewSet):
+#     queryset = Favorite.objects.all()
+#     serializer_class = FavoriteSerializer
+#     lookup_field = 'id'
+#     def get_queryset(self):
+#         return self.queryset.filter(user=self.request.user)
+#         #пытаемся установить фильтр по Избранным
 
 
 
