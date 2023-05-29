@@ -38,4 +38,4 @@ class FavoriteSerializer(ModelSerializer):
 
         rep = super().to_representation(instance)
         rep['song'] = SongSerializer(instance.song).data
-        return  rep
+        return rep

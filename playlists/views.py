@@ -16,4 +16,4 @@ from .serializers import PlaylistSerializer
 class PlaylistViewSet(viewsets.ModelViewSet):
     queryset = Playlist.objects.all()
     serializer_class = PlaylistSerializer
-    permission_classes = [IsAuthenticated, IsAuthor]
+    # permission_classes = [IsAuthenticated, IsAuthor]
