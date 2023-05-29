@@ -15,7 +15,6 @@ class Album(models.Model):
     release = models.DateField(auto_now_add=True)
     description = models.TextField()
     cover_photo = models.ImageField(upload_to='album_covers', blank=True, null=True)
-
     def __str__(self):
         return self.title
 

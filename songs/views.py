@@ -24,6 +24,8 @@ class SongUploadView(APIView):
 class SongListView(ListAPIView):
     queryset = Song.objects.all()
     serializer_class = SongSerializer
+    filter_backends = (SearchFilter, DjangoFilterBackend,)
+    filterset_fields = ('genre',)
 
 class SongRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Song.objects.all()
@@ -34,7 +36,7 @@ class SongRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 class ArtistViewSet(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
-    filter_backends = (SearchFilter, DjangoFilterBackend)
+    filter_backends = (SearchFilter, DjangoFilterBackend,)
     search_fields = ('full_name',)
 
 
@@ -42,7 +44,7 @@ class AlbumViewSet(viewsets.ModelViewSet):
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
     filter_backends = (SearchFilter, DjangoFilterBackend)
-    search_fields = ('title',)
+    search_fields = ('title', 'artist')
 
 class GenreListView(ListAPIView):
     queryset = Genre.objects.all()
