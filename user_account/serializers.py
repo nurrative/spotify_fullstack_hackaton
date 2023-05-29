@@ -111,13 +111,13 @@ class LogoutSerializer(serializers.Serializer):
     refresh_token = serializers.CharField()
 
 class ProfileSerializer(serializers.ModelSerializer):
-    favorites = FavoriteSerializer(many=True, read_only=True)
-    playlists = PlaylistSerializer(many=True, read_only=True)
-    ratings = RatingSerializer(many=True, read_only=True)
+    # favorites = FavoriteSerializer(many=True, read_only=True)
+    # playlists = PlaylistSerializer(many=True, read_only=True)
+    # ratings = RatingSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = ('email', 'phone', 'favorites', 'playlists', 'ratings')
+        fields = ('email', 'phone' ) #'ratings' 'playlists', favorites
 
     # def get_artist(self, obj):
     #     return obj.album.artist.full_name

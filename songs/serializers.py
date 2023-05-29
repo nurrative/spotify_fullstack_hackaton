@@ -9,11 +9,6 @@ class GenreSerializer(serializers.ModelSerializer):
         model = Genre
         fields = '__all__'
 
-class AlbumSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Album
-        fields = ('id','title','artist', 'release', 'description', 'cover_photo')
-
 class SimpleAlbumSerializer(serializers.ModelSerializer):
     class Meta:
         model = Album
@@ -70,4 +65,16 @@ class SongSerializer(serializers.ModelSerializer):
         representation['release_date'] = self.get_release_date(instance)
         representation['cover_photo'] = self.get_cover_photo(instance)
         representation['genre'] = GenreSerializer(instance.genre).data
+        return representation
+
+
+class AlbumSerializer(serializers.ModelSerializer):
+    # songs = serializers.SongSerializer(many=True, read_only=True)
+    class Meta:
+        model = Album
+        fields = ('id','title','artist', 'release', 'description', 'cover_photo', ) #'songs'
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['songs'] = SongSerializer(instance.songs.all(), many=True).data
         return representation

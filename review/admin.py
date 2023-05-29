@@ -7,5 +7,4 @@ from .models import *
 
 # admin.site.register(Comment)
 admin.site.register(Rating)
-admin.site.register(Favorite)
 admin.site.register(Like)
