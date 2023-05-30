@@ -16,6 +16,9 @@ class Album(models.Model):
     description = models.TextField()
     cover_photo = models.ImageField(upload_to='album_covers', blank=True, null=True)
 
+    def __str__(self):
+        return self.title
+
 
 class Genre(models.Model):
     slug = models.SlugField(max_length=50, primary_key=True, unique=True)
