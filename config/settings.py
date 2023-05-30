@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
+    # 'rest_auth',
+    # 'allauth',
+    # 'allauth.account',
+    # 'rest_auth.registration',
     #our libs
     'user_account',
     'songs',
@@ -186,6 +190,15 @@ CORS_ORIGIN_WHITELIST = [
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': 'YOUR_CLIENT_ID',
+            'secret': 'YOUR_CLIENT_SECRET',
+            'key': ''
+        }
+    }
+}
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

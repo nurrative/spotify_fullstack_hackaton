@@ -2,10 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
-
+from rest_framework.decorators import api_view
 from .serializers import *
 from rest_framework.generics import CreateAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -17,20 +17,19 @@ class RegisterUserView(APIView):
         serializer = RegisterUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response("Вы успешно зарегестрировались!", status=201)
+        return Response("Проверьте вашу почту для аутентификации", status=201)
     
 
 User = get_user_model()
 
 
-class ActivationView(APIView):
-    def get(self, request, activation_code):
-        User = get_user_model()
-        user = get_object_or_404(User, activation_code=activation_code)
-        user.is_active = True
-        user.activation_code = ''
-        user.save()
-        return Response("Ваш аккаунт успешно активирован!")
+@api_view(["GET"])
+def activate(request, activation_code):
+    user = get_object_or_404(User, activation_code=activation_code)
+    user.is_active = True
+    user.activation_code = ''
+    user.save()
+    return redirect("http://127.0.0.1:3000/")
 
 
 class ChangePasswordAPIView(APIView):

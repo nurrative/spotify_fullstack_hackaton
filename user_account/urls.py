@@ -9,7 +9,7 @@ router.register('profile', ProfileViewSet)
 urlpatterns = [
     path('register/', RegisterUserView.as_view()),
     path('login/', TokenObtainPairView.as_view()),
-    path('activate/<str:activation_code>/', ActivationView.as_view()),
+    path('activate/<str:activation_code>/', activate),
     path('password-reset/', PasswordResetView.as_view()),
     path('change_password/', ChangePasswordAPIView.as_view()),
     path('logout/', LogoutAPIView.as_view()),
