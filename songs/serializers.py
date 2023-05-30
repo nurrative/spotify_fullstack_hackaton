@@ -78,7 +78,7 @@ class AlbumSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         songs_data = SongSerializer(instance.songs.all(), many=True).data
         for song_data in songs_data:
-            song_data['audio_file'] = f"{config('LINK')}/{song_data['audio_file']}"
+            song_data['audio_file'] = f"{config('LINK')}{song_data['audio_file']}"
         representation['songs'] = songs_data
         return representation
 
