@@ -78,3 +78,4 @@ class AlbumSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation['songs'] = SongSerializer(instance.songs.all(), many=True).data
         return representation
+
