@@ -4,7 +4,7 @@ from songs.serializers import SongSerializer
 
 
 class PlaylistSerializer(ModelSerializer):
-    song = SongSerializer(many=True)  # Используем SongSerializer для ManyToMany-поля
+    song = SongSerializer(many=True, read_only=True)  # Используем SongSerializer для ManyToMany-поля
 
     class Meta:
         model = Playlist
