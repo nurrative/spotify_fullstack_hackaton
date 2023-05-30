@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'drf_yasg',
+    'django_celery_beat',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
     #our libs
@@ -81,15 +82,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('DB_NAME'),
-            'USER': config('DB_USER'),
-            'PASSWORD': config('DB_PASSWORD'),
-            'HOST': '127.0.0.1',
-            'PORT': '5432'
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config("DB_NAME"),
+        'USER': config("DB_USER"),
+        'PASSWORD': config("DB_PASSWORD"),
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
+}
 
 
 REST_FRAMEWORK = {
@@ -199,3 +200,5 @@ EMAIL_USE_SSL = False
 
 ACCOUNT_LOGOUT_ON_GET = True
 
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
