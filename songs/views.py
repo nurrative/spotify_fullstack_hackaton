@@ -8,6 +8,7 @@ from .serializers import *
 from .models import *
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, ListCreateAPIView
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.permissions import AllowAny
 
 
 class SongUploadView(APIView):
@@ -49,4 +50,7 @@ class AlbumViewSet(viewsets.ModelViewSet):
 class GenreListView(ListAPIView):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
+    permission_classes = [AllowAny, ]
+
+
 
