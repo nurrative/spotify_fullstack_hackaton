@@ -47,7 +47,7 @@ class SongSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Song
-        fields = ('id','title', 'audio_file', 'album', 'artist', 'release_date', 'cover_photo') #cover_song
+        fields = ('id','title', 'audio_file','genre', 'album', 'artist', 'release_date', 'cover_photo') #cover_song
 
     def get_artist(self, obj):
         return obj.album.artist.id, obj.album.artist.full_name
