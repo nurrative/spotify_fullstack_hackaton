@@ -11,4 +11,3 @@ celery
 redis
 django-celery-beat
 django-allauth
-django-rest-auth
