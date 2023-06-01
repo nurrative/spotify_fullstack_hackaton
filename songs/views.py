@@ -14,7 +14,7 @@ from rest_framework.permissions import AllowAny
 class SongUploadView(APIView):
     parser_classes = [MultiPartParser]
 
-    @swagger_auto_schema()
+    @swagger_auto_schema(request_body=SongSerializer)
     def post(self, request, format=None):
         serializer = SongSerializer(data=request.data)
         if serializer.is_valid():
