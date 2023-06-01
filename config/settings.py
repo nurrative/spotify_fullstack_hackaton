@@ -38,10 +38,13 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
-    # 'rest_auth',
-    # 'allauth',
-    # 'allauth.account',
-    # 'rest_auth.registration',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+
     #our libs
     'user_account',
     'songs',
@@ -172,6 +175,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+SITE_ID=2
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+
 CORS_ALLOW_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
@@ -188,17 +198,29 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:8000',
 ]
 
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'SCOPE': [
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
         'APP': {
-            'client_id': 'YOUR_CLIENT_ID',
-            'secret': 'YOUR_CLIENT_SECRET',
+            'client_id': config("CLIENT_ID_GOOGLE"),
+            'secret': config("SECRET_GOOGLE"),
             'key': ''
         }
-    }
+    },
 }
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -212,7 +234,6 @@ EMAIL_USE_TLS = True
 ACTIVATE_USERS_EMAIL = True
 EMAIL_USE_SSL = False
 
-ACCOUNT_LOGOUT_ON_GET = True
 
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
