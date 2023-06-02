@@ -10,8 +10,8 @@ from rest_framework.generics import get_object_or_404
 
 from playlists.models import Playlist
 from .permissions import IsAuthor
-from .models import Rating, Like, Comment
-from .serializers import RatingSerializer, CommentSerializer
+from .models import Rating, Like
+from .serializers import RatingSerializer
 # Create your views here.
 
 # class FavoriteViewSet(
@@ -29,11 +29,7 @@ from .serializers import RatingSerializer, CommentSerializer
 #         return self.queryset.filter(user=self.request.user)
 #         #пытаемся установить фильтр по Избранным
 
-class CommentViewSet(
-    mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, GenericViewSet):
-    queryset = Comment.objects.all()
-    serializer_class =  CommentSerializer
-    permission_classes = [IsAuthenticated, IsAuthor]
+
 
 class AddRatingAPIView(APIView):
     permission_classes = [IsAuthenticated]
