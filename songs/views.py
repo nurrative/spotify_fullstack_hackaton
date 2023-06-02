@@ -27,7 +27,7 @@ class SongListView(ListAPIView):
     serializer_class = SongSerializer
     filter_backends = (SearchFilter, DjangoFilterBackend)
     filterset_fields = ('genre',)
-    search_fields = ('title','album')
+    search_fields = ('title')
 
 class SongRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Song.objects.all()
