@@ -62,5 +62,25 @@ class FavoritePlaylistSerializer(ModelSerializer):
         # audio_file = config("LINK") + audio_file
         # song_data['audio_file'] = audio_file
         # rep['songs'] = song_data
+        playlist_data = SimplePlaylist(instance.playlist).data
+        rep['playlists'] = playlist_data
+        return rep
+
+
+class FollowArtistSerializer(ModelSerializer):
+    class Meta:
+        model = FollowArtist
+        exclude = ('user',)
+
+    def validate(self, attrs):
+        super().validate(attrs)
+        attrs['user'] = self.context['request'].user
+        return attrs
+
+    def to_representation(self, instance: FollowArtist):
+        from songs.serializers import SimpleArtistSerializer
+        rep = super().to_representation(instance)
+        artist_data = SimpleArtistSerializer(instance.artists).data
+        rep['artists'] = artist_data
         return rep
 
