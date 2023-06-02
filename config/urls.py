@@ -22,9 +22,9 @@ from review import views
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Spotify",
-        description="makers bootcamp",
-        default_version="v1",
+        title="Spotify API",
+        description="...",
+        default_version="v2",
     ),
     public=True
 )
@@ -32,8 +32,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('docs/', schema_view.with_ui("swagger")),
-    path('accounts/', include('user_account.urls')),
+    path('account/', include('user_account.urls')),
     path('', include('songs.urls')),
     path('', include('review.urls')),
     path('', include('playlists.urls')),
+    path('accounts/', include('allauth.urls')),
 ]

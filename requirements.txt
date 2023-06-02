@@ -7,3 +7,7 @@ drf-yasg
 python-decouple
 django-filter
 django-cors-headers
+celery
+redis
+django-celery-beat
+django-allauth

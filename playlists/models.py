@@ -17,10 +17,9 @@ class Playlist(models.Model):
             return sum([x.value for x in ratings]) // ratings.count()
             # ищем среднее значение рейтинга
         return 0
-    
+
     def __str__(self):
         return self.title
-
 
 # class Library(models.Model):
 #     library_title = models.CharField(max_length=100)

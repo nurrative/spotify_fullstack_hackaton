@@ -8,12 +8,13 @@ from .serializers import *
 from .models import *
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, ListCreateAPIView
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.permissions import AllowAny
 
 
 class SongUploadView(APIView):
     parser_classes = [MultiPartParser]
 
-    @swagger_auto_schema()
+    @swagger_auto_schema(request_body=SongSerializer)
     def post(self, request, format=None):
         serializer = SongSerializer(data=request.data)
         if serializer.is_valid():
@@ -26,7 +27,7 @@ class SongListView(ListAPIView):
     serializer_class = SongSerializer
     filter_backends = (SearchFilter, DjangoFilterBackend)
     filterset_fields = ('genre',)
-    search_fields = ('title',)
+    search_fields = ('title')
 
 class SongRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Song.objects.all()
@@ -44,9 +45,12 @@ class AlbumViewSet(viewsets.ModelViewSet):
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
     filter_backends = (SearchFilter, DjangoFilterBackend)
-    search_fields = ('title', 'artist')
+    search_fields = ('title',)
 
 class GenreListView(ListAPIView):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
+    permission_classes = [AllowAny, ]
+
+
 
