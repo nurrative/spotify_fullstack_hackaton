@@ -58,10 +58,6 @@ class FavoritePlaylistSerializer(ModelSerializer):
         from playlists.serializers import SimplePlaylist
         rep = super().to_representation(instance)
         song_data = SimplePlaylist(instance.playlist).data
-        # audio_file = song_data['audio_file']
-        # audio_file = config("LINK") + audio_file
-        # song_data['audio_file'] = audio_file
-        # rep['songs'] = song_data
         playlist_data = SimplePlaylist(instance.playlist).data
         rep['playlists'] = playlist_data
         return rep
