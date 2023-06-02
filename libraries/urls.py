@@ -1,5 +1,4 @@
-from django.urls import path, include
-from .views import FavoriteSongAPIView, FavoriteAlbumAPIView
+from django.urls import path
 from .views import FavoriteSongAPIView, FavoriteAlbumAPIView, FavoritePlaylistAPIView, FollowArtistAPIView
 
 urlpatterns = [
