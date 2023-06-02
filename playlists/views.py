@@ -34,4 +34,4 @@ class PlaylistViewSet(viewsets.ModelViewSet):
     filter_backends = (SearchFilter, DjangoFilterBackend)
     # filterset_fields = ('playlists_rating',)
     search_fields = ('title', 'description')
-    permission_classes = [IsAuthor, IsAuthenticated] #
+    permission_classes = [IsAuthor, IsAuthenticated]
