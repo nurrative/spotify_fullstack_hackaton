@@ -45,7 +45,7 @@ class AlbumViewSet(viewsets.ModelViewSet):
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
     filter_backends = (SearchFilter, DjangoFilterBackend)
-    search_fields = ('title', 'artist')
+    search_fields = ('title',)
 
 class GenreListView(ListAPIView):
     queryset = Genre.objects.all()
