@@ -21,10 +21,7 @@ class PlaylistSerializer(ModelSerializer):
         return rep
 
 
-# class LibrarySerializer(ModelSerializer):
-#     model = Library
-#     exclude = ('user',)
-#     rep['user'] = {
-#         'id': instance.user.id,
-#         'email': instance.user.email,
-#     }
+class SimplePlaylist(ModelSerializer):
+    class Meta:
+        model = Playlist
+        fields = ('id', 'title', 'cover_photo')

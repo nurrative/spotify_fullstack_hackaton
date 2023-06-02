@@ -6,7 +6,8 @@ from django.shortcuts import get_object_or_404, redirect
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view
-from .serializers import *
+from .serializers import RegisterUserSerializer, ChangePasswordSerializer,\
+    PasswordResetSerializer,LogoutSerializer, ProfileSerializer
 from rest_framework.generics import CreateAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
