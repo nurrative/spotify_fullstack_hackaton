@@ -57,7 +57,6 @@ class FavoritePlaylistSerializer(ModelSerializer):
     def to_representation(self, instance: FavoritePlaylist):
         from playlists.serializers import SimplePlaylist
         rep = super().to_representation(instance)
-        song_data = SimplePlaylist(instance.playlist).data
         playlist_data = SimplePlaylist(instance.playlist).data
         rep['playlists'] = playlist_data
         return rep
