@@ -1,9 +1,8 @@
 from rest_framework import serializers
 from django.utils.crypto import get_random_string
-from .models import UserImage, User
+from .models import UserImage
 from .utils import send_activation_code, reset_password
 from review.serializers import *
-from playlists.serializers import *
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):

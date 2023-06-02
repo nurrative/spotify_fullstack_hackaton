@@ -37,4 +37,5 @@ urlpatterns = [
     path('', include('review.urls')),
     path('', include('playlists.urls')),
     path('accounts/', include('allauth.urls')),
+    path('favorite/', include('libraries.urls')),
 ]

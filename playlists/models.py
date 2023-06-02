@@ -21,7 +21,3 @@ class Playlist(models.Model):
     def __str__(self):
         return self.title
 
-# class Library(models.Model):
-#     library_title = models.CharField(max_length=100)
-#     playlists = models.ForeignKey(Playlist, on_delete=models.CASCADE, related_name='libraries')
-#     user_library = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
