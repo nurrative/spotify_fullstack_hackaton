@@ -13,7 +13,8 @@ class PlaylistSerializer(ModelSerializer):
     def validate(self, attrs):
         super().validate(attrs)
         attrs['user'] = self.context['request'].user
-        return  attrs
+        return attrs
+
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)

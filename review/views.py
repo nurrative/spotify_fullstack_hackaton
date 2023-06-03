@@ -10,25 +10,15 @@ from rest_framework.generics import get_object_or_404
 
 from playlists.models import Playlist
 from .permissions import IsAuthor
-from .models import Rating, Like
-from .serializers import RatingSerializer
-# Create your views here.
-
-# class FavoriteViewSet(
-#     mixins.CreateModelMixin, mixins.ListModelMixin, mixins.DestroyModelMixin,mixins.RetrieveModelMixin, GenericViewSet):
-#     queryset =  Favorite.objects.all()
-#     serializer_class = FavoriteSerializer
-#     permission_classes = [IsAuthenticated, IsAuthor]
+from .models import Rating, Like, Comment
+from .serializers import RatingSerializer, CommentSerializer
 
 
-# class FavoriteViewSet(viewsets.ModelViewSet):
-#     queryset = Favorite.objects.all()
-#     serializer_class = FavoriteSerializer
-#     lookup_field = 'id'
-#     def get_queryset(self):
-#         return self.queryset.filter(user=self.request.user)
-#         #пытаемся установить фильтр по Избранным
-
+class CommentViewSet(
+    mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, GenericViewSet):
+    queryset = Comment.objects.all()
+    serializer_class =  CommentSerializer
+    permission_classes = [IsAuthenticated, IsAuthor]
 
 
 class AddRatingAPIView(APIView):
@@ -43,6 +33,7 @@ class AddRatingAPIView(APIView):
 
 @api_view(['POST'])
 def toggle_like(request, id):
+    """передаем id плейлиста который лайкаем"""
     user = request.user
     if not user.is_authenticated:
         return Response(status=401)

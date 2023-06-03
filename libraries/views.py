@@ -109,3 +109,4 @@ class FollowArtistAPIView(APIView):
         return Response(serializer.errors, status=400)
 
 
+
