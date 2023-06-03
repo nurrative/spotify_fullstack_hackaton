@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .views import *
+from .views import RegisterUserView, ProfileViewSet, activate, PasswordResetView, ChangePasswordAPIView, LogoutAPIView
 
 router = DefaultRouter()
 router.register('profile', ProfileViewSet)

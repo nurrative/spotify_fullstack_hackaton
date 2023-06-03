@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import *
 from .models import *
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, ListCreateAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.permissions import AllowAny
 
