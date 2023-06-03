@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
     'django.contrib.sites',
+    'drf_api_logger',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -63,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'drf_api_logger.middleware.api_logger_middleware.APILoggerMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -119,6 +121,8 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+
+DRF_API_LOGGER_DATABASE = True
 from datetime import timedelta
 
 SIMPLE_JWT = {

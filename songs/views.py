@@ -14,6 +14,7 @@ from .models import *
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.permissions import AllowAny
+from rest_framework.generics import RetrieveAPIView
 
 
 class SongUploadView(APIView):
@@ -85,6 +86,11 @@ def show_similar_songs(request, pk):
  #        data = song_serializer.data
  #        data = [{**song, 'audio_file': f"{config('LINK')}{song['audio_file']}"} for song in data]
  #        return data
+
+
+
+
+
 
 
 
