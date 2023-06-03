@@ -43,12 +43,13 @@ class SongSerializer(WritableNestedModelSerializer,serializers.ModelSerializer):
     release_date = serializers.SerializerMethodField()
     cover_photo = serializers.SerializerMethodField()
 
+
     class Meta:
         model = Song
         fields = ('id','title', 'audio_file','genre', 'album', 'artist', 'release_date', 'cover_photo') #cover_song
 
     def get_artist(self, obj):
-        return obj.album.artist.id, obj.album.artist.full_name
+        return {'id': obj.album.artist.id, 'title': obj.album.artist.full_name}
 
     def get_release_date(self, obj):
         return obj.album.release
@@ -63,6 +64,7 @@ class SongSerializer(WritableNestedModelSerializer,serializers.ModelSerializer):
         representation['release_date'] = self.get_release_date(instance)
         representation['cover_photo'] = self.get_cover_photo(instance)
         representation['genre'] = GenreSerializer(instance.genre).data
+        representation['album'] = SimpleAlbumSerializer(instance.album).data
         return representation
 
 
@@ -90,3 +92,9 @@ class SimpleArtistSerializer(serializers.ModelSerializer):
         rep = super().to_representation(instance)
         rep['photo'] = config('LINK')+rep['photo']
         return rep
+
+
+class SimpleAlbumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Album
+        fields = ('id', 'title')
