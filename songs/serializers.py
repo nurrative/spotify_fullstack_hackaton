@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import *
 from django.utils.encoding import force_str
 from decouple import config
+from drf_writable_nested import WritableNestedModelSerializer
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -37,7 +38,7 @@ class ArtistSerializer(serializers.ModelSerializer):
         return representation
 
 
-class SongSerializer(serializers.ModelSerializer):
+class SongSerializer(WritableNestedModelSerializer,serializers.ModelSerializer):
     artist = serializers.SerializerMethodField()
     release_date = serializers.SerializerMethodField()
     cover_photo = serializers.SerializerMethodField()
@@ -75,7 +76,7 @@ class AlbumSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         songs_data = SongSerializer(instance.songs.all(), many=True).data
         for song_data in songs_data:
-            song_data['audio_file'] = f"{config('LINK')}{song_data['audio_file']}"
+            song_data['audio_file'] = f"{config('LINK')}+{song_data['audio_file']}"
         representation['songs'] = songs_data
         return representation
 
