@@ -14,21 +14,6 @@ from .models import Rating, Like
 from .serializers import RatingSerializer
 # Create your views here.
 
-# class FavoriteViewSet(
-#     mixins.CreateModelMixin, mixins.ListModelMixin, mixins.DestroyModelMixin,mixins.RetrieveModelMixin, GenericViewSet):
-#     queryset =  Favorite.objects.all()
-#     serializer_class = FavoriteSerializer
-#     permission_classes = [IsAuthenticated, IsAuthor]
-
-
-# class FavoriteViewSet(viewsets.ModelViewSet):
-#     queryset = Favorite.objects.all()
-#     serializer_class = FavoriteSerializer
-#     lookup_field = 'id'
-#     def get_queryset(self):
-#         return self.queryset.filter(user=self.request.user)
-#         #пытаемся установить фильтр по Избранным
-
 
 
 class AddRatingAPIView(APIView):
