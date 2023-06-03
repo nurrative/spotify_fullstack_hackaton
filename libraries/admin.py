@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import FavoritePlaylist, FollowArtist, FavoriteAlbum, FavoriteSong
 
-# Register your models here.
+admin.site.register(FavoritePlaylist)
+admin.site.register(FollowArtist)
+admin.site.register(FavoriteAlbum)
+admin.site.register(FavoriteSong)

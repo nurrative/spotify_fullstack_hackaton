@@ -17,4 +17,5 @@ urlpatterns = [
     # path('artists/', ArtistListCreateAPIView.as_view()),
     # path('artists/<int:id>/', ArtistRetrieveUpdateDestroyView.as_view()),
     path('genre/', GenreListView.as_view()),
+    path('songs/<slug:pk>/similar/', show_similar_songs, name='similar_songs'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
