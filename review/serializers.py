@@ -42,4 +42,4 @@ class RatingSerializer(ModelSerializer):
 
         rep = super().to_representation(instance)
         rep['playlist'] = PlaylistSerializer(instance.playlist).data
-        return  rep
+        return rep
