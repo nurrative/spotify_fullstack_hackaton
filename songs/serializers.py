@@ -79,3 +79,13 @@ class AlbumSerializer(serializers.ModelSerializer):
         representation['songs'] = songs_data
         return representation
 
+class SimpleArtistSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Artist
+        fields = ('id', 'full_name', 'photo')
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['photo'] = config('LINK')+rep['photo']
+        return rep

@@ -20,6 +20,7 @@ class CommentViewSet(
     serializer_class =  CommentSerializer
     permission_classes = [IsAuthenticated, IsAuthor]
 
+
 class AddRatingAPIView(APIView):
     permission_classes = [IsAuthenticated]
 

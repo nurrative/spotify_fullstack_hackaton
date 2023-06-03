@@ -122,7 +122,7 @@ SWAGGER_SETTINGS = {
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
 }
 
@@ -205,8 +205,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
-
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
