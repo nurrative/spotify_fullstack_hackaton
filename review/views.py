@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from rest_framework import mixins, viewsets
+from rest_framework import mixins
 from rest_framework.decorators import api_view
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.views import APIView
@@ -10,11 +9,15 @@ from rest_framework.generics import get_object_or_404
 
 from playlists.models import Playlist
 from .permissions import IsAuthor
-from .models import Rating, Like
-from .serializers import RatingSerializer
-# Create your views here.
+from .models import Like, Comment
+from .serializers import RatingSerializer, CommentSerializer
 
 
+class CommentViewSet(
+    mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, GenericViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated, IsAuthor]
 
 class AddRatingAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -28,6 +31,7 @@ class AddRatingAPIView(APIView):
 
 @api_view(['POST'])
 def toggle_like(request, id):
+    """передаем id плейлиста который лайкаем"""
     user = request.user
     if not user.is_authenticated:
         return Response(status=401)

@@ -1,10 +1,12 @@
 from rest_framework.serializers import ModelSerializer
 from .models import *
 from songs.serializers import SongSerializer
+from review.serializers import CommentSerializer
 
 
 class PlaylistSerializer(ModelSerializer):
     song = SongSerializer(many=True, read_only=True)  # Используем SongSerializer для ManyToMany-поля
+
 
     class Meta:
         model = Playlist
@@ -13,7 +15,7 @@ class PlaylistSerializer(ModelSerializer):
     def validate(self, attrs):
         super().validate(attrs)
         attrs['user'] = self.context['request'].user
-        return  attrs
+        return attrs
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
@@ -23,6 +25,8 @@ class PlaylistSerializer(ModelSerializer):
         }
         rep['likes'] = instance.likes.all().count()
         rep['rating'] = instance.average_rating
+        comments = CommentSerializer(instance.comments.all(), many=True).data
+        rep['comments'] = comments
         return rep
 
 

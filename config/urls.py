@@ -34,7 +34,7 @@ urlpatterns = [
     path('docs/', schema_view.with_ui("swagger")),
     path('account/', include('user_account.urls')),
     path('', include('songs.urls')),
-    path('', include('review.urls')),
+    path('review/', include('review.urls')),
     path('', include('playlists.urls')),
     path('accounts/', include('allauth.urls')),
     path('favorite/', include('libraries.urls')),
