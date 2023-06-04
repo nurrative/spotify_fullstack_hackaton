@@ -30,7 +30,7 @@ class Genre(models.Model):
 
 class Song(models.Model):
     title = models.CharField(max_length=100)
-    audio_file = models.FileField(upload_to='songs')
+    audio_file = models.FileField(upload_to='songs', null=True, blank=True)
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name='songs')
     genre = models.ForeignKey(Genre,on_delete=models.CASCADE, related_name='songs')
 

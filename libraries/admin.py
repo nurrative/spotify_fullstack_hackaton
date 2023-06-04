@@ -5,3 +5,4 @@ admin.site.register(FavoritePlaylist)
 admin.site.register(FollowArtist)
 admin.site.register(FavoriteAlbum)
 admin.site.register(FavoriteSong)
+

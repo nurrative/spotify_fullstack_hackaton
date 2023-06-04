@@ -2,12 +2,14 @@ from rest_framework import serializers
 from .models import *
 from django.utils.encoding import force_str
 from decouple import config
+from drf_writable_nested import WritableNestedModelSerializer
 
 
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
         fields = '__all__'
+
 
 class SimpleAlbumSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,17 +39,18 @@ class ArtistSerializer(serializers.ModelSerializer):
         return representation
 
 
-class SongSerializer(serializers.ModelSerializer):
+class SongSerializer(WritableNestedModelSerializer,serializers.ModelSerializer):
     artist = serializers.SerializerMethodField()
     release_date = serializers.SerializerMethodField()
     cover_photo = serializers.SerializerMethodField()
+
 
     class Meta:
         model = Song
         fields = ('id','title', 'audio_file','genre', 'album', 'artist', 'release_date', 'cover_photo') #cover_song
 
     def get_artist(self, obj):
-        return obj.album.artist.id, obj.album.artist.full_name
+        return {'id': obj.album.artist.id, 'title': obj.album.artist.full_name}
 
     def get_release_date(self, obj):
         return obj.album.release
@@ -62,14 +65,14 @@ class SongSerializer(serializers.ModelSerializer):
         representation['release_date'] = self.get_release_date(instance)
         representation['cover_photo'] = self.get_cover_photo(instance)
         representation['genre'] = GenreSerializer(instance.genre).data
+        representation['album'] = SimpleAlbumSerializer(instance.album).data
         return representation
 
 
 class AlbumSerializer(serializers.ModelSerializer):
-    # songs = serializers.SongSerializer(many=True, read_only=True)
     class Meta:
         model = Album
-        fields = ('id','title','artist', 'release', 'description', 'cover_photo', ) #'songs'
+        fields = ('id','title','artist', 'release', 'description', 'cover_photo',) #'songs'
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -89,3 +92,5 @@ class SimpleArtistSerializer(serializers.ModelSerializer):
         rep = super().to_representation(instance)
         rep['photo'] = config('LINK')+rep['photo']
         return rep
+
+
