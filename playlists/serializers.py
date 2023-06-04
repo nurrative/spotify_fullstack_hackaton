@@ -2,21 +2,14 @@ from rest_framework.serializers import ModelSerializer
 from .models import *
 from songs.serializers import SongSerializer
 from review.serializers import CommentSerializer
+from decouple import config
 
-class SimpleSongSerializer(ModelSerializer):
-    class Meta:
-        model = Song
-        fields = ('id',)
 
 class PlaylistSerializer(ModelSerializer):
-    # song = SimpleSongSerializer(many=True) #read_only=True
-    #
-    # Используем SongSerializer для ManyToMany-поля
-
 
     class Meta:
         model = Playlist
-        exclude = ('user',)
+        exclude = ('user', 'song')
 
     def validate(self, attrs):
         super().validate(attrs)
@@ -32,9 +25,16 @@ class PlaylistSerializer(ModelSerializer):
         rep['likes'] = instance.likes.all().count()
         rep['rating'] = instance.average_rating
         rep['comments'] = CommentSerializer(instance.comments.all(), many=True).data
-        rep['songs'] = SimpleSongSerializer(instance.song.all(), many=True).data
+        songs_data = SongSerializer(instance.song.all(), many=True).data
+        songs_data = [{**song, 'audio_file': f"{config('LINK')}{song['audio_file']}"} for song in songs_data]
+        rep['songs'] = songs_data
         return rep
 
+
+# class SimplePlaylist(ModelSerializer):
+#     class Meta:
+#         model = Playlist
+#         fields = ('id', 'title', 'cover_photo')
 
 class SimplePlaylist(ModelSerializer):
     class Meta:
