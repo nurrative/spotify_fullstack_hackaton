@@ -7,15 +7,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-
-
 from .serializers import *
 from .models import *
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.permissions import AllowAny
-from rest_framework.generics import RetrieveAPIView
-
+from .permission import IsAdminOrReadOnly
 
 class SongUploadView(APIView):
     parser_classes = [MultiPartParser]
@@ -38,6 +35,7 @@ class SongListView(ListAPIView):
 class SongRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Song.objects.all()
     serializer_class = SongSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class ArtistViewSet(viewsets.ModelViewSet):
@@ -45,6 +43,7 @@ class ArtistViewSet(viewsets.ModelViewSet):
     serializer_class = ArtistSerializer
     filter_backends = (SearchFilter, DjangoFilterBackend,)
     search_fields = ('full_name',)
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class AlbumViewSet(viewsets.ModelViewSet):
@@ -52,6 +51,7 @@ class AlbumViewSet(viewsets.ModelViewSet):
     serializer_class = AlbumSerializer
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('title', 'artist')
+    permission_classes = [IsAdminOrReadOnly]
 
 class GenreListView(ListAPIView):
     queryset = Genre.objects.all()
