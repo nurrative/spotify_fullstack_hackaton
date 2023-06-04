@@ -71,21 +71,11 @@ def show_similar_songs(request, pk):
     # data = data[]
     data = [{**song, 'audio_file': f"{config('LINK')}{song['audio_file']}"} for song in data]
     similar_songs_url = reverse('similar_songs', args=[pk])
-    # print(data[genre])
-    # print(song_serializer.data)
 
     return Response({
         'similar_songs': data,
-        #similar_songs_url': similar_songs_url,
     })
 
- # def get_songs(self, instance: Artist):
- #        albums = instance.albums.all()
- #        songs = Song.objects.filter(album__in=albums)
- #        song_serializer = SongSerializer(songs, many=True)
- #        data = song_serializer.data
- #        data = [{**song, 'audio_file': f"{config('LINK')}{song['audio_file']}"} for song in data]
- #        return data
 
 
 

@@ -37,9 +37,9 @@ class RatingSerializer(ModelSerializer):
         obj, created = Rating.objects.update_or_create(**validated_data, defaults={'value': value})
         return obj
 
-    def to_representation(self, instance):
-        from playlists.serializers import PlaylistSerializer
-
-        rep = super().to_representation(instance)
-        rep['playlist'] = PlaylistSerializer(instance.playlist).data
-        return rep
+    # def to_representation(self, instance):
+    #     from playlists.serializers import PlaylistSerializer
+    #
+    #     rep = super().to_representation(instance)
+    #     rep['playlist'] = PlaylistSerializer(instance.playlist).data
+    #     return rep
