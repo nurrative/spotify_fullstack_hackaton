@@ -70,7 +70,6 @@ class SongSerializer(WritableNestedModelSerializer,serializers.ModelSerializer):
         representation['release_date'] = self.get_release_date(instance)
         representation['cover_photo'] = self.get_cover_photo(instance)
         representation['genre'] = GenreSerializer(instance.genre).data
-        representation['audio_file'] = f"{config('LINK')}{representation['audio_file']}"
         representation['album'] = SimpleAlbumSerializer(instance.album).data
         return representation
 
@@ -94,9 +93,9 @@ class SimpleArtistSerializer(serializers.ModelSerializer):
         model = Artist
         fields = ('id', 'full_name', 'photo')
 
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['photo'] = config('LINK')+rep['photo']
-        return rep
+    # def to_representation(self, instance):
+    #     rep = super().to_representation(instance)
+    #     rep['photo'] = config('LINK')+rep['photo']
+    #     return rep
 
 

@@ -29,6 +29,7 @@ class PlaylistSerializer(ModelSerializer):
         rep['rating'] = instance.average_rating
         rep['comments'] = CommentSerializer(instance.comments.all(), many=True).data
         rep['songs'] = SongSerializer(instance.song.all(), many=True).data
+        # print([a['audio_file']=config for a in rep['songs']])
         return rep
 
 
