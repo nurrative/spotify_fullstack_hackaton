@@ -18,8 +18,8 @@ class SimpleAlbumSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         rep = super().to_representation(instance)
-        rep['cover_photo'] = config('LINK')+rep['cover_photo']
-        print(rep['cover_photo'])
+        if str(rep['cover_photo']):
+            rep['cover_photo'] = config('LINK')+rep['cover_photo']
         return rep
 
 
