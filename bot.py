@@ -5,8 +5,6 @@ import os
 import time
 from requests import get
 
-
-
 bot = Bot(token="6001879308:AAHy09bFhdqzcLUIHx7Ie9OJ35r9QKMlUmM")
 dp = Dispatcher(bot)
 
@@ -23,7 +21,7 @@ class FilenameCollectorPP(yt_dlp.postprocessor.common.PostProcessor):
 async def start_cmd(message: types.Message):
     await message.reply('Привет, это музыкальный бот!')
 
-@dp.message_handler(commands=['sea'])
+@dp.message_handler(commands=['youtube'])
 async def search_cmd(message: types.Message):
     arg = message.get_args()
     YDL_OPTIONS = {'format': 'bestaudio/best',
@@ -40,9 +38,12 @@ async def search_cmd(message: types.Message):
                  filename_collector = FilenameCollectorPP()
                  yd1.add_post_processor(filename_collector)
                  video = yd1.extract_info(f"ytsearch:{arg}", download=True)['entries'][0]
-                 await message.reply_document(open(filename_collector.filenames[0], 'rd'))
+                 file_path = filename_collector.filenames[0]
+                 new_file_path = os.path.join('media', os.path.basename(file_path))
+                 os.rename(file_path, new_file_path)
+                 await message.reply_document(open(new_file_path, 'rb'))
                  time.sleep(5)
-                 os.remove(filename_collector.filenames[0])
+                 os.remove(new_file_path)
             else:
                  video = yd1.extract_info(arg, download= True)
 
