@@ -3,9 +3,15 @@ from .models import *
 from songs.serializers import SongSerializer
 from review.serializers import CommentSerializer
 
+class SimpleSongSerializer(ModelSerializer):
+    class Meta:
+        model = Song
+        fields = ('id',)
 
 class PlaylistSerializer(ModelSerializer):
-    song = SongSerializer(many=True, read_only=True)  # Используем SongSerializer для ManyToMany-поля
+    # song = SimpleSongSerializer(many=True) #read_only=True
+    #
+    # Используем SongSerializer для ManyToMany-поля
 
 
     class Meta:
@@ -25,8 +31,8 @@ class PlaylistSerializer(ModelSerializer):
         }
         rep['likes'] = instance.likes.all().count()
         rep['rating'] = instance.average_rating
-        comments = CommentSerializer(instance.comments.all(), many=True).data
-        rep['comments'] = comments
+        rep['comments'] = CommentSerializer(instance.comments.all(), many=True).data
+        rep['songs'] = SimpleSongSerializer(instance.song.all(), many=True).data
         return rep
 
 
