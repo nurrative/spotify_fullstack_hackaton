@@ -187,14 +187,15 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 
-CORS_ALLOW_ALL_ORIGINS = True
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:3000',
-#     'http://127.0.0.1:3000',
-#     'http://localhost:3001',
-#     'http://127.0.0.1:3001',
-#     'http://127.0.0.1:8000',
-# ]
+# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:3001',
+    'http://127.0.0.1:3001',
+    'http://127.0.0.1:8000',
+    'https://main--papaya-concha-b54faa.netlify.app/'
+]
 
 
 AUTHENTICATION_BACKENDS = [
