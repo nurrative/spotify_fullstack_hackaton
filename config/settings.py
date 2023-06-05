@@ -108,7 +108,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10,
+    'PAGE_SIZE': 100,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 
 }
@@ -126,8 +126,8 @@ DRF_API_LOGGER_DATABASE = True
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
 }
 
 AUTH_USER_MODEL = 'user_account.User'
@@ -187,14 +187,15 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 
-CORS_ALLOW_ALL_ORIGINS = True
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:3000',
-#     'http://127.0.0.1:3000',
-#     'http://localhost:3001',
-#     'http://127.0.0.1:3001',
-#     'http://127.0.0.1:8000',
-# ]
+# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:3001',
+    'http://127.0.0.1:3001',
+    'http://127.0.0.1:8000',
+    'https://main--papaya-concha-b54faa.netlify.app/'
+]
 
 
 AUTHENTICATION_BACKENDS = [

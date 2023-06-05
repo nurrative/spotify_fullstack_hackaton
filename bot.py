@@ -45,9 +45,12 @@ async def search_cmd(message: types.Message):
                  filename_collector = FilenameCollectorPP()
                  yd1.add_post_processor(filename_collector)
                  video = yd1.extract_info(f"ytsearch:{arg}", download=True)['entries'][0]
-                 await message.reply_document(open(filename_collector.filenames[0], 'rd'))
+                 file_path = filename_collector.filenames[0]
+                 new_file_path = os.path.join('media', os.path.basename(file_path))
+                 os.rename(file_path, new_file_path)
+                 await message.reply_document(open(new_file_path, 'rb'))
                  time.sleep(5)
-                 os.remove(filename_collector.filenames[0])
+                 os.remove(new_file_path)
             else:
                  video = yd1.extract_info(arg, download= True)
 

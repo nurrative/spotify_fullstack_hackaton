@@ -5,12 +5,14 @@ from review.serializers import CommentSerializer
 
 
 class PlaylistSerializer(ModelSerializer):
-    song = SongSerializer(many=True, read_only=True)  # Используем SongSerializer для ManyToMany-поля
+    # song = SimpleSongSerializer(many=True) #read_only=True
+    #
+    # Используем SongSerializer для ManyToMany-поля
 
 
     class Meta:
         model = Playlist
-        exclude = ('user',)
+        exclude = ('user', 'song')
 
     def validate(self, attrs):
         super().validate(attrs)
@@ -25,8 +27,9 @@ class PlaylistSerializer(ModelSerializer):
         }
         rep['likes'] = instance.likes.all().count()
         rep['rating'] = instance.average_rating
-        comments = CommentSerializer(instance.comments.all(), many=True).data
-        rep['comments'] = comments
+        rep['comments'] = CommentSerializer(instance.comments.all(), many=True).data
+        rep['songs'] = SongSerializer(instance.song.all(), many=True).data
+        # print([a['audio_file']=config for a in rep['songs']])
         return rep
 
 

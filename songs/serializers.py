@@ -16,6 +16,11 @@ class SimpleAlbumSerializer(serializers.ModelSerializer):
         model = Album
         fields = ('id', 'title', 'cover_photo')
 
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['cover_photo'] = f"{config('LINK')}{rep['cover_photo']}"
+        return rep
+
 
 class ArtistSerializer(serializers.ModelSerializer):
     albums = SimpleAlbumSerializer(many=True, read_only=True)
@@ -88,9 +93,9 @@ class SimpleArtistSerializer(serializers.ModelSerializer):
         model = Artist
         fields = ('id', 'full_name', 'photo')
 
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['photo'] = config('LINK')+rep['photo']
-        return rep
+    # def to_representation(self, instance):
+    #     rep = super().to_representation(instance)
+    #     rep['photo'] = config('LINK')+rep['photo']
+    #     return rep
 
 
