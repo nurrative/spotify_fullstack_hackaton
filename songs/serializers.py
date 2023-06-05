@@ -1,4 +1,5 @@
-from rest_framework import serializers
+Nursultan Python, [5 июня 2023 г., 09:51:49]:
+...from rest_framework import serializers
 from .models import *
 from django.utils.encoding import force_str
 from decouple import config
@@ -16,10 +17,6 @@ class SimpleAlbumSerializer(serializers.ModelSerializer):
         model = Album
         fields = ('id', 'title', 'cover_photo')
 
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['cover_photo'] = f"{config('LINK')}{rep['cover_photo']}"
-        return rep
 
 
 class ArtistSerializer(serializers.ModelSerializer):
@@ -33,10 +30,10 @@ class ArtistSerializer(serializers.ModelSerializer):
     def get_songs(self, instance: Artist):
         albums = instance.albums.all()
         songs = Song.objects.filter(album__in=albums)
-        song_serializer = SongSerializer(songs, many=True)
-        data = song_serializer.data
-        data = [{**song, 'audio_file': f"{config('LINK')}{song['audio_file']}"} for song in data]
-        return data
+        song_serializer = SimpleSongSerializer(songs, many=True).data
+        # data = song_serializer.data
+        # data = [{**song, 'audio_file': f"{config('LINK')}{song['audio_file']}"} for song in data]
+        return song_serializer
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
@@ -52,7 +49,7 @@ class SongSerializer(WritableNestedModelSerializer,serializers.ModelSerializer):
 
     class Meta:
         model = Song
-        fields = ('id','title', 'audio_file','genre', 'album', 'artist', 'release_date', 'cover_photo') #cover_song
+        fields = ('id','title', 'audio_file','genre', 'album', 'artist', 'release_date','cover_photo') #'cover_photo'
 
     def get_artist(self, obj):
         return {'id': obj.album.artist.id, 'title': obj.album.artist.full_name}
@@ -64,13 +61,17 @@ class SongSerializer(WritableNestedModelSerializer,serializers.ModelSerializer):
     def get_cover_photo(self, obj):
         return f'{config("LINK")}/media/{force_str(obj.album.cover_photo)}'
 
+
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['artist'] = self.get_artist(instance)
         representation['release_date'] = self.get_release_date(instance)
         representation['cover_photo'] = self.get_cover_photo(instance)
         representation['genre'] = GenreSerializer(instance.genre).data
-        representation['album'] = SimpleAlbumSerializer(instance.album).data
+        # representation['songs'] = SimpleAlbumSerializer(instance.album).data
+        # for album_data in albums_data:
+        #     album_data['cover_photo'] = f"{config('LINK')}{album_data['cover_photo']}"
+        # representation['songs'] = albums_data
         return representation
 
 
@@ -81,11 +82,12 @@ class AlbumSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        songs_data = SongSerializer(instance.songs.all(), many=True).data
-        for song_data in songs_data:
-            song_data['audio_file'] = f"{config('LINK')}{song_data['audio_file']}"
-        representation['songs'] = songs_data
+        representation['songs'] = SimpleSongSerializer(instance.songs.all(), many=True).data
+        # for song_data in songs_data:
+        #     song_data['audio_file'] = f"{config('LINK')}{song_data['audio_file']}"
+        # representation['songs'] = songs_data
         return representation
+
 
 class SimpleArtistSerializer(serializers.ModelSerializer):
 
@@ -93,9 +95,26 @@ class SimpleArtistSerializer(serializers.ModelSerializer):
         model = Artist
         fields = ('id', 'full_name', 'photo')
 
-    # def to_representation(self, instance):
-    #     rep = super().to_representation(instance)
-    #     rep['photo'] = config('LINK')+rep['photo']
-    #     return rep
+
+class SimpleSongSerializer(serializers.ModelSerializer):
+    release_date = serializers.SerializerMethodField()
+    cover_photo = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Song
+        fields = ('id', 'title', 'audio_file', 'release_date','cover_photo')
+
+    def get_release_date(self, obj):
+        return obj.album.release
 
 
+    def get_cover_photo(self, obj):
+        return f'{config("LINK")}/media/{force_str(obj.album.cover_photo)}'
+
+def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['audio_file'] = f"{config('LINK')}{rep['audio_file']}"
+        rep['release_date'] = self.get_release_date(instance)
+        rep['cover_photo'] = self.get_cover_photo(instance)
+        return rep
+...
