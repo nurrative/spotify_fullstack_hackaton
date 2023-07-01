@@ -1,11 +1,10 @@
 from rest_framework.serializers import ModelSerializer
 from .models import *
-from songs.serializers import SongSerializer
+from songs.serializers import SimpleSongSerializer
 from review.serializers import CommentSerializer
-from decouple import config
+
 
 class PlaylistSerializer(ModelSerializer):
-
     class Meta:
         model = Playlist
         exclude = ('user', 'song')
@@ -30,7 +29,7 @@ class PlaylistSerializer(ModelSerializer):
         return rep
 
 
-# class SimplePlaylist(ModelSerializer):
-#     class Meta:
-#         model = Playlist
-#         fields = ('id', 'title', 'cover_photo')
+class SimplePlaylist(ModelSerializer):
+    class Meta:
+        model = Playlist
+        fields = ('id', 'title', 'cover_photo')
