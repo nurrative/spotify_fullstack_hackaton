@@ -1,3 +1,7 @@
+'''
+Телеграмм бот был создан с помощью библиотеки: Aiogram, Yt_dlp и двух программ FFprog и FFmpeg.
+Бот позволяет пользователям искать и загружать видео с YouTube в формате аудио.
+'''
 import logging
 from aiogram import Bot, Dispatcher, types, executor
 import yt_dlp
@@ -5,9 +9,11 @@ import os
 import time
 from requests import get
 
+# Создаем экземпляр бота и диспетчера:
 bot = Bot(token="6001879308:AAHy09bFhdqzcLUIHx7Ie9OJ35r9QKMlUmM")
 dp = Dispatcher(bot)
 
+# Создаем класс FilenameCollectorPP, который используется для сбора и хранения путей к загруженным аудиофайлам.
 class FilenameCollectorPP(yt_dlp.postprocessor.common.PostProcessor):
     def __init__(self):
         super(FilenameCollectorPP, self).__init__(None)
@@ -17,10 +23,12 @@ class FilenameCollectorPP(yt_dlp.postprocessor.common.PostProcessor):
         self.filenames.append(information["filepath"])
         return [], information
 
+# Создаем функцию, обрабатывающую команду /start, которая при запуске отправляет приветственное сообщение:
 @dp.message_handler(commands=['start'])
 async def start_cmd(message: types.Message):
     await message.reply('Привет, это музыкальный бот!')
 
+# Создаем функцию, обрабатывающую команду  /youtube, которая при запуске выполняет поиск и загрузку аудиофайла с YouTube:
 @dp.message_handler(commands=['youtube'])
 async def search_cmd(message: types.Message):
     arg = message.get_args()
@@ -50,6 +58,6 @@ async def search_cmd(message: types.Message):
             return filename_collector.filenames[0]
 
 
-
+# Запуск бота:
 if __name__ == "__main__":
         executor.start_polling(dp, skip_updates=True)

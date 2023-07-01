@@ -12,3 +12,5 @@ redis
 django-celery-beat
 django-allauth
 drf-api-logger
+ffprog
+ffmpeg

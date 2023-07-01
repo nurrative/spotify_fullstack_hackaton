@@ -66,6 +66,10 @@ class SongSerializer(WritableNestedModelSerializer,serializers.ModelSerializer):
         representation['cover_photo'] = self.get_cover_photo(instance)
         representation['genre'] = GenreSerializer(instance.genre).data
         representation['album'] = SimpleAlbumSerializer(instance.album).data
+        # albums_data = AlbumSerializer(instance.album.all(), many=True).data
+        # albums_data = [{**albums_data, 'cover_photo': f"{config('LINK')}{album['cover_photo']}"} for album in albums_data]
+        # print(albums_data)
+        # representation['songs'] = albums_data
         return representation
 
 
