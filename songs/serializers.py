@@ -1,5 +1,5 @@
-Nursultan Python, [5 июня 2023 г., 09:51:49]:
-...from rest_framework import serializers
+
+from rest_framework import serializers
 from .models import *
 from django.utils.encoding import force_str
 from decouple import config

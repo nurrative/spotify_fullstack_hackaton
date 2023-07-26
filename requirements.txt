@@ -12,5 +12,5 @@ redis
 django-celery-beat
 django-allauth
 drf-api-logger
-ffprog
-ffmpeg
+djoser==2.2.0
+drf_writable_nested
