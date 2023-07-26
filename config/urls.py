@@ -38,4 +38,6 @@ urlpatterns = [
     path('', include('playlists.urls')),
     path('accounts/', include('allauth.urls')),
     path('favorite/', include('libraries.urls')),
+    path('api/v1/', include('djoser.urls')),
+    path('api/v1/', include('djoser.urls.jwt')),
 ]
