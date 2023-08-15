@@ -12,5 +12,4 @@ redis
 django-celery-beat
 django-allauth
 drf-api-logger
-djoser==2.2.0
 drf_writable_nested

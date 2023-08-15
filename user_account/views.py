@@ -10,7 +10,7 @@ from .serializers import RegisterUserSerializer, ChangePasswordSerializer,\
     PasswordResetSerializer,LogoutSerializer, ProfileSerializer
 from rest_framework.generics import CreateAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from rest_framework_simplejwt.views import TokenRefreshView
 
 class RegisterUserView(APIView):
     @swagger_auto_schema(request_body=RegisterUserSerializer())
@@ -80,3 +80,9 @@ class LogoutAPIView(APIView):
 class ProfileViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = ProfileSerializer
+
+
+class CustomTokenRefreshView(TokenRefreshView):
+
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)

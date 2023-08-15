@@ -18,8 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from review import views
-
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 schema_view = get_schema_view(
     openapi.Info(
         title="Spotify API",
@@ -41,3 +40,4 @@ urlpatterns = [
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.jwt')),
 ]
+urlpatterns += staticfiles_urlpatterns()

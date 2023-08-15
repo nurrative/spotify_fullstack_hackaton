@@ -218,21 +218,21 @@ AUTHENTICATION_BACKENDS = [
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-        'APP': {
-            'client_id': config("CLIENT_ID_GOOGLE"),
-            'secret': config("SECRET_GOOGLE"),
-            'key': ''
-        }
-    },
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': [
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         },
+#         'APP': {
+#             'client_id': config("CLIENT_ID_GOOGLE"),
+#             'secret': config("SECRET_GOOGLE"),
+#             'key': ''
+#         }
+#     },
+# }
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
