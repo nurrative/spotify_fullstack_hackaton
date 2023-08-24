@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     #libs
     'rest_framework',
     'rest_framework_simplejwt',
-    'djoser',
     'django_filters',
     'drf_yasg',
     'django_celery_beat',
@@ -132,13 +131,6 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
 }
 
-DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '#/activate/?uid={uid}&token={token}',
-    'SEND_ACTIVATION_EMAIL': True,
-    'SERIALIZERS': {},
-}
 
 AUTH_USER_MODEL = 'user_account.User'
 ACCOUNT_EMAIL_REQUIRED = True  # указывает, что email обязателен для регистрации
