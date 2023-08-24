@@ -15,3 +15,5 @@ drf-api-logger
 drf_writable_nested
 gunicorn
 djoser
+django-storages
+boto3
