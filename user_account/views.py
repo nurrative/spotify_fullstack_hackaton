@@ -18,19 +18,10 @@ class RegisterUserView(APIView):
         serializer = RegisterUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response("Проверьте вашу почту для аутентификации", status=201)
+        return Response("Вы зарегестрировались", status=201)
     
 
 User = get_user_model()
-
-
-@api_view(["GET"])
-def activate(request, activation_code):
-    user = get_object_or_404(User, activation_code=activation_code)
-    user.is_active = True
-    user.activation_code = ''
-    user.save()
-    return redirect("http://127.0.0.1:3000/")
 
 
 class ChangePasswordAPIView(APIView):

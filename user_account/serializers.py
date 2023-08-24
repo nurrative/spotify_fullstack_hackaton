@@ -82,7 +82,6 @@ class ChangePasswordSerializer(serializers.Serializer):
     def save(self):
         data = self.validated_data
         user = User.objects.get(email=data['email'])
-        user.set_activation_code()
         user.password_confirm()
 
 class PasswordResetSerializer(serializers.Serializer):
