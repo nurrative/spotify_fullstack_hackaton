@@ -59,7 +59,7 @@ class SongSerializer(WritableNestedModelSerializer,serializers.ModelSerializer):
 
 
     def get_cover_photo(self, obj):
-        return f'{config("LINK")}/media/{force_str(obj.album.cover_photo)}'
+        return f'{config("LINK")}{force_str(obj.album.cover_photo)}'
 
 
     def to_representation(self, instance):
@@ -109,7 +109,7 @@ class SimpleSongSerializer(serializers.ModelSerializer):
 
 
     def get_cover_photo(self, obj):
-        return f'{config("LINK")}/media/{force_str(obj.album.cover_photo)}'
+        return f'{config("LINK")}{force_str(obj.album.cover_photo)}'
 
 def to_representation(self, instance):
         rep = super().to_representation(instance)
